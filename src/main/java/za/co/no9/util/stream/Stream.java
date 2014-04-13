@@ -1,6 +1,7 @@
 package za.co.no9.util.stream;
 
 import za.co.no9.lang.Predicate;
+import za.co.no9.lang.PredicateUtils;
 import za.co.no9.lang.function.AndPredicate;
 import za.co.no9.util.EnumerationUtils;
 import za.co.no9.util.FilteredEnumeration;
@@ -8,12 +9,7 @@ import za.co.no9.util.Optional;
 
 public class Stream<T> {
     private final java.util.Enumeration<T> enumOfT;
-    private Predicate<T> filterPredicate = new Predicate<T>() {
-        @Override
-        public boolean test(T element) {
-            return true;
-        }
-    };
+    public Predicate<T> filterPredicate = PredicateUtils.<T>truePredicate();
 
     public Stream(java.util.Enumeration<T> enumOfT) {
         this.enumOfT = enumOfT;
