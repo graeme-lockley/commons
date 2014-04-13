@@ -5,8 +5,8 @@ public class EnumerationUtils {
         return enumeration.hasMoreElements() ? Optional.of(enumeration.nextElement()) : Optional.<T>empty();
     }
 
-    public static <T> int size(FilteredEnumeration<T> enumeration) {
-        int size = 0;
+    public static <T> long size(FilteredEnumeration<T> enumeration) {
+        long size = 0;
         while (enumeration.hasMoreElements()) {
             enumeration.nextElement();
             size += 1;

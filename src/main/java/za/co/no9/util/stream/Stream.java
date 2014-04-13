@@ -29,7 +29,7 @@ public class Stream<T> {
         return EnumerationUtils.first(new FilteredEnumeration<T>(enumOfT, new AndPredicate<T>(filterPredicate, matchPredicate)));
     }
 
-    public int count() {
+    public long count() {
         return EnumerationUtils.size(new FilteredEnumeration<T>(enumOfT, filterPredicate));
     }
 }
