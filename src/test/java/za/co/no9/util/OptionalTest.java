@@ -11,7 +11,7 @@ public class OptionalTest {
     private static final Optional<String> SET_OPTIONAL = Optional.ofNullable("Hello");
 
     @Test(expected = java.lang.NullPointerException.class)
-    public void should_throw_excpeption_when_attempting_to_create_an_optional_using_of_with_null() {
+    public void should_throw_exception_when_attempting_to_create_an_optional_using_of_with_null() {
         Optional.of(null);
     }
 

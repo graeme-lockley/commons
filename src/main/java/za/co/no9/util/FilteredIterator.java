@@ -2,26 +2,26 @@ package za.co.no9.util;
 
 import za.co.no9.lang.Predicate;
 
-public class FilteredEnumeration<T> implements java.util.Enumeration<T> {
-    private final java.util.Enumeration<T> enumOfT;
+public class FilteredIterator<T> implements java.util.Iterator<T> {
+    private final java.util.Iterator<T> iteratorOfT;
     private final Predicate<T> filter;
 
     private T nextElement;
 
-    public FilteredEnumeration(java.util.Enumeration<T> enumOfT, Predicate<T> filter) {
-        this.enumOfT = enumOfT;
+    public FilteredIterator(java.util.Iterator<T> iteratorOfT, Predicate<T> filter) {
+        this.iteratorOfT = iteratorOfT;
         this.filter = filter;
 
         setNextElement();
     }
 
     @Override
-    public boolean hasMoreElements() {
+    public boolean hasNext() {
         return nextElement != null;
     }
 
     @Override
-    public T nextElement() {
+    public T next() {
         T returnElement = nextElement;
         setNextElement();
         return returnElement;
@@ -29,11 +29,16 @@ public class FilteredEnumeration<T> implements java.util.Enumeration<T> {
 
     private void setNextElement() {
         nextElement = null;
-        while (nextElement == null && enumOfT.hasMoreElements()) {
-            T testElement = enumOfT.nextElement();
+        while (nextElement == null && iteratorOfT.hasNext()) {
+            T testElement = iteratorOfT.next();
             if (filter.test(testElement)) {
                 nextElement = testElement;
             }
         }
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
     }
 }
