@@ -1,18 +1,14 @@
 package za.co.no9.util.stream;
 
 import za.co.no9.lang.Predicate;
-import za.co.no9.lang.PredicateUtils;
 import za.co.no9.util.FilteredIterator;
 import za.co.no9.util.IteratorUtils;
 import za.co.no9.util.Optional;
 
 import java.util.Iterator;
 
-import static za.co.no9.lang.PredicateUtils.andPredicate;
-
 public class Stream<T> {
-    private final java.util.Iterator<T> iterator;
-    public Predicate<T> filterPredicate = PredicateUtils.<T>truePredicate();
+    private java.util.Iterator<T> iterator;
 
     public Stream(java.util.Iterator<T> iterator) {
         this.iterator = iterator;
@@ -23,20 +19,20 @@ public class Stream<T> {
     }
 
     public Stream<T> filter(Predicate<T> predicate) {
-        filterPredicate = andPredicate(filterPredicate, predicate);
+        iterator = new FilteredIterator<T>(iterator, predicate);
 
         return this;
     }
 
     public Optional<T> findAny(final Predicate<T> matchPredicate) {
-        return IteratorUtils.first(new FilteredIterator<T>(iterator, andPredicate(filterPredicate, matchPredicate)));
+        return IteratorUtils.first(new FilteredIterator<T>(iterator, matchPredicate));
     }
 
     public long count() {
-        return IteratorUtils.size(new FilteredIterator<T>(iterator, filterPredicate));
+        return IteratorUtils.size(iterator);
     }
 
     public Iterator<T> toIterator() {
-        return new FilteredIterator<T>(iterator, filterPredicate);
+        return iterator;
     }
 }
