@@ -35,4 +35,8 @@ public class Stream<T> {
     public long count() {
         return IteratorUtils.size(new FilteredIterator<T>(iterator, filterPredicate));
     }
+
+    public Iterator<T> toIterator() {
+        return new FilteredIterator<T>(iterator, filterPredicate);
+    }
 }
