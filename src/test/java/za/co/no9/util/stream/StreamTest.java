@@ -24,14 +24,14 @@ public class StreamTest {
 
     @Test
     public void should_iterate_through_the_list() {
-        assertIteratorEquals(items.iterator(), Stream.create(items.iterator()).toIterator());
+        assertIteratorEquals(items, Stream.create(items.iterator()).toIterator());
     }
 
     @Test
     public void should_filter_elements_from_the_list() {
         List<String> control = Arrays.asList("A", "C", "E");
 
-        assertIteratorEquals(control.iterator(), Stream
+        assertIteratorEquals(control, Stream
                 .create(items.iterator())
                 .filter(oddFilter)
                 .toIterator());
@@ -71,12 +71,14 @@ public class StreamTest {
                 .isPresent());
     }
 
+    private <T> void assertIteratorEquals(Iterable<T> control, Iterator<T> experiment) {
+        assertIteratorEquals(control.iterator(), experiment);
+    }
+
     private <T> void assertIteratorEquals(Iterator<T> control, Iterator<T> experiment) {
         while (control.hasNext() && experiment.hasNext()) {
             assertEquals(control.next(), experiment.next());
         }
         assertEquals(control.hasNext(), experiment.hasNext());
     }
-
-
 }
