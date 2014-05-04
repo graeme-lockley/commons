@@ -2,6 +2,7 @@ package za.co.no9.util.stream;
 
 import org.junit.Test;
 import za.co.no9.lang.Predicate;
+import za.co.no9.util.function.Function;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -69,6 +70,20 @@ public class StreamTest {
                     }
                 })
                 .isPresent());
+    }
+
+    @Test
+    public void should_map_a_string_stream_onto_an_int_stream() {
+        assertIteratorEquals(Arrays.asList(0, 1, 2, 3, 4, 5), Stream
+                        .create(items.iterator())
+                        .map(new Function<String, Integer>() {
+                            @Override
+                            public Integer apply(String s) {
+                                return s.charAt(0) - 'A';
+                            }
+                        })
+                        .toIterator()
+        );
     }
 
     private <T> void assertIteratorEquals(Iterable<T> control, Iterator<T> experiment) {

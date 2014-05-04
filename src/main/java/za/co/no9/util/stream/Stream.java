@@ -3,7 +3,9 @@ package za.co.no9.util.stream;
 import za.co.no9.lang.Predicate;
 import za.co.no9.util.FilteredIterator;
 import za.co.no9.util.IteratorUtils;
+import za.co.no9.util.MapIterator;
 import za.co.no9.util.Optional;
+import za.co.no9.util.function.Function;
 
 import java.util.Iterator;
 
@@ -34,5 +36,9 @@ public class Stream<T> {
 
     public Iterator<T> toIterator() {
         return iterator;
+    }
+
+    public <R> Stream<R> map(final Function<T, R> function) {
+        return new Stream<R>(new MapIterator<T, R>(iterator, function));
     }
 }
