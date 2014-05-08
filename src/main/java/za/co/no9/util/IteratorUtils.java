@@ -1,5 +1,7 @@
 package za.co.no9.util;
 
+import za.co.no9.util.function.BiFunction;
+import za.co.no9.util.function.Consumer;
 import za.co.no9.util.stream.Stream;
 
 import java.util.Enumeration;
@@ -35,5 +37,21 @@ public class IteratorUtils {
             size += 1;
         }
         return size;
+    }
+
+    public static <T> void each(Iterator<T> iterator, Consumer<T> consumer) {
+        while (iterator.hasNext()) {
+            consumer.accept(iterator.next());
+        }
+    }
+
+    public static <T, R> R fold(Iterator<T> iterator, R initValue, BiFunction<R, T, R> biFunction) {
+        R result = initValue;
+
+        while (iterator.hasNext()) {
+            result = biFunction.apply(result, iterator.next());
+        }
+
+        return result;
     }
 }

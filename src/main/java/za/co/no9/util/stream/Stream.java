@@ -5,6 +5,8 @@ import za.co.no9.util.FilteredIterator;
 import za.co.no9.util.IteratorUtils;
 import za.co.no9.util.MapIterator;
 import za.co.no9.util.Optional;
+import za.co.no9.util.function.BiFunction;
+import za.co.no9.util.function.Consumer;
 import za.co.no9.util.function.Function;
 
 import java.util.Iterator;
@@ -40,5 +42,13 @@ public class Stream<T> {
 
     public <R> Stream<R> map(final Function<T, R> function) {
         return new Stream<R>(new MapIterator<T, R>(iterator, function));
+    }
+
+    public void each(final Consumer<T> consumer) {
+        IteratorUtils.each(iterator, consumer);
+    }
+
+    public <R> R fold(R init, BiFunction<R, T, R> function) {
+        return IteratorUtils.fold(iterator, init, function);
     }
 }
