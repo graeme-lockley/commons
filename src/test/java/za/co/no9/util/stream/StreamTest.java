@@ -2,6 +2,7 @@ package za.co.no9.util.stream;
 
 import org.junit.Test;
 import za.co.no9.lang.Predicate;
+import za.co.no9.util.function.BiFunction;
 import za.co.no9.util.function.Consumer;
 import za.co.no9.util.function.Function;
 
@@ -34,24 +35,21 @@ public class StreamTest {
     public void should_filter_elements_from_the_list() {
         List<String> control = Arrays.asList("A", "C", "E");
 
-        assertIteratorEquals(control, Stream
-                .create(items.iterator())
+        assertIteratorEquals(control, Stream.create(items.iterator())
                 .filter(oddFilter)
                 .toIterator());
     }
 
     @Test
     public void should_return_the_correct_count_following_applying_a_filter() {
-        assertEquals(3, Stream
-                .create(items.iterator())
+        assertEquals(3, Stream.create(items.iterator())
                 .filter(oddFilter)
                 .count());
     }
 
     @Test
     public void should_locate_an_element_that_matches_the_pattern() {
-        assertEquals("C", Stream
-                .create(items.iterator())
+        assertEquals("C", Stream.create(items.iterator())
                 .findAny(new Predicate<String>() {
                     @Override
                     public boolean test(String element) {
@@ -100,6 +98,19 @@ public class StreamTest {
                     }
                 });
         assertIteratorEquals(items, result.iterator());
+    }
+
+    @Test
+    public void should_fold_into_a_string() {
+        String result = Stream.create(items.iterator())
+                .fold(null, new BiFunction<String, String, String>() {
+                    @Override
+                    public String apply(String s, String s2) {
+                        return s == null ? s2 : (s + ", " + s2);
+                    }
+                });
+
+        assertEquals("A, B, C, D, E, F", result);
     }
 
     private <T> void assertIteratorEquals(Iterable<T> control, Iterator<T> experiment) {
