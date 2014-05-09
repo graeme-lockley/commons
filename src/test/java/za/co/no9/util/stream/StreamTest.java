@@ -2,8 +2,10 @@ package za.co.no9.util.stream;
 
 import org.junit.Test;
 import za.co.no9.lang.Predicate;
+import za.co.no9.util.function.Consumer;
 import za.co.no9.util.function.Function;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -84,6 +86,20 @@ public class StreamTest {
                         })
                         .toIterator()
         );
+    }
+
+    @Test
+    public void should_execute_consumer_for_each_element() {
+        final List<String> result = new ArrayList<String>();
+
+        Stream.create(items.iterator())
+                .each(new Consumer<String>() {
+                    @Override
+                    public void accept(String element) {
+                        result.add(element);
+                    }
+                });
+        assertIteratorEquals(items, result.iterator());
     }
 
     private <T> void assertIteratorEquals(Iterable<T> control, Iterator<T> experiment) {
