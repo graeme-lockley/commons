@@ -12,7 +12,7 @@
     <artifactId>commons-1.6</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>commons</name>
+    <name>commons 1.6</name>
     <description>A set of common classes and interfaces that are being used by Java 6 and Java 7 based applications.</description>
     <url>https://github.com/graeme-lockley/commons</url>
     <licenses>
