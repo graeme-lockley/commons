@@ -14,7 +14,7 @@ public class MapBuilderTest {
     }
 
     @Test
-    public void should_create_a_single_entry_hashmap() {
+    public void should_create_a_single_entry_hash_map() {
         Map<String, String> map = MapBuilder.<String, String>create()
                 .add("Hello", "World")
                 .toHashMap();
